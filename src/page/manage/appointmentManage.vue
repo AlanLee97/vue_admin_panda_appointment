@@ -2,8 +2,31 @@
     <div class="fillcontain">
         <head-top></head-top>
         <div class="table_container">
+
+            <div class="al-box-shadow-radius al-p-20px al-m-bottom-20px ">
+                <el-radio-group v-model="type">
+                    <el-radio :label=-1>全部约拍</el-radio>
+                    <el-radio :label=0>普通拍照</el-radio>
+                    <el-radio :label=1>毕业照</el-radio>
+                    <el-radio :label=2>婚纱照</el-radio>
+                    <el-radio :label=3>电商模特</el-radio>
+                </el-radio-group>
+
+                <span class="al-box-size-1px al-m-left-30px"></span>
+
+
+                <el-button
+                    class=""
+                    type="primary"
+                    size="mini"
+                    @click="">查询</el-button>
+
+            </div>
+
+
             <el-table
                 :data="tableData"
+                class="al-box-shadow-radius al-p-20px"
                 style="width: 100%">
                 <el-table-column type="expand">
                   <template slot-scope="props">
@@ -38,7 +61,7 @@
                         </el-form-item>
                       <el-form-item label="封面">
                         <span>
-                            <img class="width-50" :src="props.row.image" alt="">
+                            <img class="al-width-50" :src="props.row.image" alt="">
                         </span>
                       </el-form-item>
                     </el-form>
@@ -129,6 +152,7 @@
     export default {
         data(){
             return {
+                type: -1,
                 city: {},
                 offset: 0,
                 limit: 20,

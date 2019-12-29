@@ -1,13 +1,13 @@
 <template>
     <div>
         <head-top></head-top>
-        <homework-pie :pieData="pieData"></homework-pie>
+        <appointment-histogram :appointmentHistogram="appointmentHistogram"></appointment-histogram>
     </div>
 </template>
 
 <script>
 	import headTop from '../../components/headTop'
-    import homeworkPie from '../../components/homeworkPie'
+    import appointmentHistogram from "../../components/appointmentHistogram";
 
     import {request} from '../../util/network/request'
 
@@ -15,24 +15,25 @@
     export default {
     	data(){
     		return {
-    			pieData: {},
+                appointmentHistogram: {},
     		}
     	},
     	components: {
     		headTop,
-            homeworkPie,
+            appointmentHistogram,
     	},
     	mounted(){
-    		this.getHomeworkCount();
+    		//this.getHomeworkCount();
+    		console.log(this.appointmentHistogram);
     	},
     	methods: {
     		getHomeworkCount:function () {
                 request({
                     method:'get',
-                    url:'/index.php/index/homework/countHomework'
+                    url:'/user/get/count/city'
                 }).then(res => {
                     console.log(res);
-                    this.pieData = res.data.data;
+                    this.appointmentHistogram = res.data.data;
                 }).catch(err => {
                     console.log(err);
                 })

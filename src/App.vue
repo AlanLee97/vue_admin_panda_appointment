@@ -12,11 +12,11 @@
 
 <style lang="less">
     @import './style/common';
-    @import "./style/my-css.css";
+    @import "style/al-css/al-css.css";
 
-
-
-    .d-il-blk{
-        display: inline-block;
+    html{
+        background-color: #FCFCFC;
     }
+
+
 </style>

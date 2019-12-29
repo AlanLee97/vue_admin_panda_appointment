@@ -2,27 +2,18 @@
     <div>
         <head-top></head-top>
 
-        <div class="box-shadow-raduis p-20px m-20px">
+        <div class="al-box-shadow-radius al-p-20px al-m-20px">
             <el-row>
                 <el-col :span="2"><pre> </pre></el-col>
                 <el-col :span="20">
                     <el-row>
-                        <el-col :span="12" class="p-10px" v-for="(item, index) in images" :key="index">
+                        <el-col :span="12" class="al-p-10px" v-for="(item, index) in images" :key="index">
                             <div class="block">
 <!--                                <span class="demonstration">默认</span>-->
                                 <el-image :src="item" :preview-src-list="images"></el-image>
                             </div>
                         </el-col>
-<!--                        <el-col :span="12" class="p-10px">-->
-<!--                            <div class="block">-->
-<!--                                <span class="demonstration">自定义</span>-->
-<!--                                <el-image :src="src">-->
-<!--                                    <div slot="placeholder" class="image-slot">-->
-<!--                                        加载中<span class="dot">...</span>-->
-<!--                                    </div>-->
-<!--                                </el-image>-->
-<!--                            </div>-->
-<!--                        </el-col>-->
+
                     </el-row>
                 </el-col>
                 <el-col :span="2"><pre> </pre></el-col>
@@ -64,8 +55,6 @@
 </script>
 
 <style>
-    .page{
-        background-color: #00e5ff;
-    }
+
 
 </style>

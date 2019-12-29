@@ -1,41 +1,55 @@
 <template>
     <div>
         <head-top></head-top>
-        <homework-pie :pieData="pieData"></homework-pie>
+        <user-city-geo-map :userCityCount="userCityCount"></user-city-geo-map>
     </div>
 </template>
 
 <script>
 	import headTop from '../../components/headTop'
-    import homeworkPie from '../../components/homeworkPie'
+    import userCityGeoMap from "../../components/userCityPie";
 
     import {request} from '../../util/network/request'
 
 
     export default {
-    	data(){
+    	data:function(){
     		return {
-    			pieData: {},
+
+    			userCityCount: [
+
+                ],
     		}
     	},
     	components: {
     		headTop,
-            homeworkPie,
+            userCityGeoMap,
     	},
     	mounted(){
-    		this.getHomeworkCount();
+    		this.getUserCityCount();
+
     	},
     	methods: {
-    		getHomeworkCount:function () {
+    		getUserCityCount:function () {
+    		    let that = this;
                 request({
                     method:'get',
-                    url:'/index.php/index/homework/countHomework'
+                    url:'/user/get/count/city'
                 }).then(res => {
                     console.log(res);
-                    this.pieData = res.data.data;
-                }).catch(err => {
+                    this.userCityCount = res.data.data;
+                    setTimeout(function () {
+                        that.userCityCount = res.data.data;
+
+                        console.log(that.userCityCount);
+                    }, 1000);
+
+
+
+                }).catch((err) => {
                     console.log(err);
-                })
+                });
+
             }
     	}
     }

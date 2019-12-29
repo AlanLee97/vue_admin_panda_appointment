@@ -4,8 +4,9 @@
         <div class="table_container">
             <el-table
                 :data="tableData"
+                class="al-box-shadow-radius al-p-20px"
                 style="width: 100%">
-                <el-table-column type="expand">
+                <el-table-column type="expand" >
                   <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
                       <el-form-item label="ID">
@@ -23,7 +24,7 @@
 
                       <el-form-item label="图片" class="width-100">
                         <span v-for="(img_url, img_index) in props.row.images" :key="img_index">
-                            <img :src="img_url" alt="" class="icon-size-150px d-il-blk">
+                            <img :src="img_url" alt="" class="al-icon-size-150px al-d-il-blk">
                         </span>
                       </el-form-item>
                     </el-form>

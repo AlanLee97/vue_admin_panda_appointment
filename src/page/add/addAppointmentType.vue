@@ -2,17 +2,21 @@
     <div>
         <head-top></head-top>
         <el-row style="margin-top: 20px;">
-  			<el-col :span="12" :offset="4">
-		        <el-form :model="formData" :rules="rules" ref="formData" label-width="110px" class="demo-formData">
-					<el-form-item label="类型名" prop="type">
-						<el-input v-model="formData.type"></el-input>
-					</el-form-item>
+  			<el-col :span="12" :offset="6">
+
+                <div class="al-box-shadow-radius al-p-20px al-m-20px">
+                    <el-form :model="formData" :rules="rules" ref="formData" label-width="110px" class="demo-formData">
+                        <el-form-item label="类型名" prop="type">
+                            <el-input v-model="formData.type"></el-input>
+                        </el-form-item>
 
 
-					<el-form-item class="button_submit">
-						<el-button type="primary" @click="submitForm('formData')">添加</el-button>
-					</el-form-item>
-				</el-form>
+                        <el-form-item class="button_submit">
+                            <el-button type="primary" @click="submitForm('formData')">添加</el-button>
+                        </el-form-item>
+                    </el-form>
+                </div>
+
   			</el-col>
   		</el-row>
     </div>

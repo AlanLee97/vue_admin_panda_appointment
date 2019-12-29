@@ -5,15 +5,15 @@
 			<header class="section_title">数据统计</header>
 			<el-row :gutter="20" style="margin-bottom: 10px;">
                 <el-col :span="4"><div class="data_list today_head"><span class="data_num head">当日数据：</span></div></el-col>
-				<el-col :span="4"><div class="data_list"><span class="data_num">{{userCount}}</span> 新增用户</div></el-col>
-				<el-col :span="4"><div class="data_list"><span class="data_num">{{homeworkCount}}</span> 新增约拍</div></el-col>
-                <el-col :span="4"><div class="data_list"><span class="data_num">{{adminCount}}</span> 新增管理员</div></el-col>
+				<el-col :span="4"><div class="data_list"><span class="data_num">{{current.user}}</span> 新增用户</div></el-col>
+				<el-col :span="4"><div class="data_list"><span class="data_num">{{current.appointment}}</span> 新增约拍</div></el-col>
+                <el-col :span="4"><div class="data_list"><span class="data_num">{{current.works}}</span> 新增作品</div></el-col>
 			</el-row>
             <el-row :gutter="20">
                 <el-col :span="4"><div class="data_list all_head"><span class="data_num head">总数据：</span></div></el-col>
-                <el-col :span="4"><div class="data_list"><span class="data_num">{{allUserCount}}</span> 注册用户</div></el-col>
-                <el-col :span="4"><div class="data_list"><span class="data_num">{{allHomeworkCount}}</span> 约拍</div></el-col>
-                <el-col :span="4"><div class="data_list"><span class="data_num">{{allAdminCount}}</span> 管理员</div></el-col>
+                <el-col :span="4"><div class="data_list"><span class="data_num">{{all.user}}</span> 用户</div></el-col>
+                <el-col :span="4"><div class="data_list"><span class="data_num">{{all.appointment}}</span> 约拍</div></el-col>
+                <el-col :span="4"><div class="data_list"><span class="data_num">{{all.works}}</span> 作品</div></el-col>
             </el-row>
 		</section>
 		<tendency :sevenDate='sevenDate' :sevenDay='sevenDay'></tendency>
@@ -25,18 +25,24 @@
 	import tendency from '../components/tendency'
 	import dtime from 'time-formater'
     import {request} from "../util/network/request";
-    import {userCount, orderCount, getUserCount, getOrderCount, adminDayCount, adminCount} from '@/api/getData'
     export default {
     	data(){
     		return {
-    			userCount: 0,
-    			homeworkCount: 0,
-                adminCount: 0,
-                allUserCount: 0,
-                allHomeworkCount: 0,
-                allAdminCount: 0,
+
     			sevenDay: [],
     			sevenDate: [[],[],[]],
+
+                current:{
+    			    appointment:0,
+                    user:0,
+                    works:0
+                },
+
+                all:{
+                    appointment:0,
+                    user:0,
+                    works:0
+                }
     		}
     	},
     	components: {
@@ -44,8 +50,13 @@
     		tendency,
     	},
     	mounted(){
-            this.getHomeworkCount();
-            this.getAdminCount();
+            this.getCurrentAppointmentCount();
+            this.getCurrentUserCount();
+            this.getCurrentWorksCount();
+
+
+            this.getAppointmentCount();
+            this.getWorksCount();
             this.getUserCount();
 
             this.sevenDate = [[5],[16],[3]];
@@ -58,41 +69,141 @@
 
         },
     	methods: {
-    	    getHomeworkCount:function(){
+    	    //获取当天约拍数量
+            getCurrentAppointmentCount:function(){
+                let date = new Date();
+                date = this.formatDate(date);
+
+
+                // date = '2019-12-27';
+
                 request({
                     method:'get',
-                    url:'/index.php/index/homework/countHomework'
+                    url:'/appointment/count/date' + '?date=' + date,
                 }).then(res => {
                     console.log(res);
                     res = res.data.data;
-                    this.allHomeworkCount = res.total;
+                    this.current.appointment = res.rs;
+                    console.log(this.current.appointment);
                 }).catch(err => {
                     console.log(err);
                 })
             },
-            getAdminCount:function(){
+
+            //获取当天用户注册数量
+            getCurrentUserCount:function(){
+                let date = new Date();
+                date = this.formatDate(date);
+
+
+                // date = '2019-12-27';
+
                 request({
                     method:'get',
-                    url:'/index.php/index/admin/countAdmin'
+                    url:'/user/count/date' + '?date=' + date,
                 }).then(res => {
                     console.log(res);
                     res = res.data.data;
-                    this.allAdminCount = res;
+                    this.current.user = res.rs;
+                    console.log(this.current.user);
                 }).catch(err => {
                     console.log(err);
                 })
             },
+
+            //获取当天作品发布数量
+            getCurrentWorksCount:function(){
+                let date = new Date();
+                date = this.formatDate(date);
+
+
+                date = '2019-12-24';
+
+                request({
+                    method:'get',
+                    url:'/works/count/date' + '?date=' + date,
+                }).then(res => {
+                    console.log(res);
+                    res = res.data.data;
+                    this.current.works = res.rs;
+                    console.log(this.current.works);
+                }).catch(err => {
+                    console.log(err);
+                })
+            },
+
+            //获取所有约拍数量
+            getAppointmentCount:function(){
+                request({
+                    method:'get',
+                    url:'/appointment/count/date',
+                }).then(res => {
+                    console.log(res);
+                    res = res.data.data;
+                    this.all.appointment = res.rs;
+                }).catch(err => {
+                    console.log(err);
+                })
+            },
+
+            //获取所有作品数量
+            getWorksCount:function(){
+                request({
+                    method:'get',
+                    url:'/works/count/date',
+                }).then(res => {
+                    console.log(res);
+                    res = res.data.data;
+                    this.all.works = res.rs;
+                }).catch(err => {
+                    console.log(err);
+                })
+            },
+
+            //获取所有用户数量
             getUserCount:function(){
                 request({
                     method:'get',
-                    url:'/index.php/index/user/countUser'
+                    url:'/user/count/date',
                 }).then(res => {
                     console.log(res);
                     res = res.data.data;
-                    this.allUserCount = res;
+                    this.all.user = res.rs;
                 }).catch(err => {
                     console.log(err);
                 })
+            },
+
+
+
+            dateFormat:function (fmt, date) {
+                let ret;
+                let opt = {
+                    "y+": date.getFullYear().toString(),        // 年
+                    "M+": (date.getMonth() + 1).toString(),     // 月
+                    "d+": date.getDate().toString(),            // 日
+                    "H+": date.getHours().toString(),           // 时
+                    "m+": date.getMinutes().toString(),         // 分
+                    "s+": date.getSeconds().toString()          // 秒
+                    // 有其他格式化字符需求可以继续添加，必须转化成字符串
+                };
+                for (let k in opt) {
+                    ret = new RegExp("(" + k + ")").exec(fmt);
+                    if (ret) {
+                        fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+                    }
+                }
+                return fmt;
+            },
+
+
+
+            formatDate:function (time) {
+                let date = new Date(time);
+                let str = date.getFullYear() + '-' +
+                    (date.getMonth() + 1) + '-' +
+                    date.getDate();
+                return str
             },
 
 

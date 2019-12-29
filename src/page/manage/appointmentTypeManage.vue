@@ -4,6 +4,7 @@
         <div class="table_container">
             <el-table
                 :data="tableData"
+                class="al-box-shadow-radius al-p-20px"
                 style="width: 100%">
                 <el-table-column type="expand">
                   <template slot-scope="props">

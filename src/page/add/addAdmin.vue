@@ -2,29 +2,41 @@
     <div>
         <head-top></head-top>
         <el-row style="margin-top: 20px;">
-            <el-col :span="12" :offset="4">
-                <el-form :model="formData" :rules="rules" ref="formData" label-width="110px" class="demo-formData">
-                    <el-form-item label="用户ID" prop="username">
-                        <el-input v-model="formData.uid"></el-input>
-                    </el-form-item>
+            <el-col :span="12" :offset="6">
+
+                <!-- 添加管理员 -->
+                <div class="al-box-shadow-radius al-p-20px al-m-20px">
+                    <el-form
+                        :model="formData"
+                        :rules="rules"
+                        ref="formData"
+                        label-width="100px"
+                        class="demo-formData">
+                        <el-form-item label="用户ID" prop="userID" >
+                            <div class="al-width-90">
+                                <el-input v-model="formData.uid" ></el-input>
+                            </div>
+                        </el-form-item>
 
 
-                    <el-form-item class="button_submit">
-                        <el-button type="primary" @click="submitForm('formData')">添加管理员</el-button>
-                    </el-form-item>
-                </el-form>
+                        <el-form-item class=" ">
+                            <div class="al-m-left-60px">
+                                <el-button type="primary"
+                                           @click="submitForm('formData', 'setAdmin')">
+                                    添加管理员
+                                </el-button>
 
 
-                <el-form :model="formData2" :rules="rules" ref="formData2" label-width="110px" class="demo-formData">
-                    <el-form-item label="用户ID" prop="username">
-                        <el-input v-model="formData2.uid"></el-input>
-                    </el-form-item>
+                                <el-button type="warning"
+                                           @click="submitForm('formData', 'cancelAdmin')">
+                                    取消管理员
+                                </el-button>
+                            </div>
 
+                        </el-form-item>
+                    </el-form>
+                </div>
 
-                    <el-form-item class="button_submit">
-                        <el-button type="primary" @click="submitForm('formData2')">取消管理员</el-button>
-                    </el-form-item>
-                </el-form>
             </el-col>
         </el-row>
     </div>
@@ -37,11 +49,9 @@
     export default {
         data(){
             return {
+                action:'',//setAdmin,cancelAdmin
                 city: {},
                 formData: {
-                    uid: '', //用户userID
-                },
-                formData2: {
                     uid: '', //用户userID
                 },
                 rules: {
@@ -96,7 +106,7 @@
             //取消管理员
             cancelAdmin:function(){
                 let data = {
-                    uid:this.formData2.uid,
+                    uid:this.formData.uid,
                     identity:3
                 };
                 request({
@@ -116,7 +126,7 @@
                             message: '取消成功',
 
                         });
-                        this.formData2.uid = '';
+                        this.formData.uid = '';
                     }
 
                 }).catch(err => {
@@ -125,12 +135,12 @@
             },
 
             //提交表单
-            submitForm(formName) {
+            submitForm(formName, action) {
                 this.$refs[formName].validate(async (valid) => {
                     if (valid) {
-                        if (formName === "formData"){
+                        if (action === "setAdmin"){
                             this.setAdmin();
-                        }else if (formName === "formData2"){
+                        }else if (action === "cancelAdmin"){
                             this.cancelAdmin();
                         }
 

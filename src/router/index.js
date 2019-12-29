@@ -25,10 +25,9 @@ const appointmentCount = r => require.ensure([], () => r(require('@/page/chart/a
 const worksCount = r => require.ensure([], () => r(require('@/page/chart/worksCount')), 'worksCount');
 
 //其他
-const visitor = r => require.ensure([], () => r(require('@/page/visitor')), 'visitor');
 const uploadImg = r => require.ensure([], () => r(require('@/page/uploadImg')), 'uploadImg');
-const vueEdit = r => require.ensure([], () => r(require('@/page/vueEdit')), 'vueEdit');
-const adminSet = r => require.ensure([], () => r(require('@/page/adminSet')), 'adminSet');
+const vueEdit = r => require.ensure([], () => r(require('@/page/add/vueEdit')), 'vueEdit');
+const about = r => require.ensure([], () => r(require('@/page/about')), 'about');
 
 
 
@@ -78,10 +77,6 @@ const routes = [
             component: addAdmin,
             meta: ['添加数据', '添加管理员'],
         },{
-			path: '/visitor',
-			component: visitor,
-			meta: ['图表', '用户分布'],
-		},{
             path: '/userCount',
             component: userCount,
             meta: ['图表', '用户统计'],
@@ -96,15 +91,15 @@ const routes = [
         },{
 			path: '/uploadImg',
 			component: uploadImg,
-			meta: ['文本编辑', 'MarkDown'],
+			meta: ['图片上传', '图片上传'],
 		},{
 			path: '/vueEdit',
 			component: vueEdit,
 			meta: ['编辑', '文本编辑'],
 		},{
-			path: '/adminSet',
-			component: adminSet,
-			meta: ['设置', '管理员设置'],
+			path: '/about',
+			component: about,
+			meta: ['关于', '关于我们'],
 		}
 
 		]

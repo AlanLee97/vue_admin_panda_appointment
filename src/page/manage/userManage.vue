@@ -2,7 +2,7 @@
     <div class="fillcontain">
         <head-top></head-top>
         <div class="table_container">
-            <div class="m-bottom-20px">
+            <div class="al-box-shadow-radius al-p-20px al-m-bottom-20px ">
                 <el-radio-group v-model="role">
                     <el-radio :label=4>全部用户</el-radio>
                     <el-radio :label=0>管理员</el-radio>
@@ -11,13 +11,22 @@
                     <el-radio :label=3>普通用户</el-radio>
                 </el-radio-group>
 
-                <el-button class="m-left-20px" type="primary" @click="getAllUsers()">查询</el-button>
+                <span class="al-box-size-1px al-m-left-30px"></span>
+
+
+                <el-button
+                    class=""
+                    type="primary"
+                    size="mini"
+                    @click="getAllUsers()">查询</el-button>
 
             </div>
 
             <el-table
                 :data="tableData"
-                style="width: 100%">
+                style="width: 100%"
+                class="al-box-shadow-radius al-p-20px"
+            >
                 <el-table-column type="expand">
                     <template slot-scope="props">
                         <el-form label-position="left" inline class="demo-table-expand">
@@ -56,11 +65,15 @@
                                 <span v-else>未认证</span>
                             </el-form-item>
 
+                            <el-form-item label="注册时间">
+                                <span>{{props.row.createTime}}</span>
+                            </el-form-item>
+
 
 
                             <el-form-item label="头像" class="width-100">
                                 <span>
-                                    <img :src="props.row.headPortraitImg" alt="" class="icon-size-150px d-il-blk">
+                                    <img :src="props.row.headPortraitImg" alt="" class="al-icon-size-150px al-d-il-blk">
                                 </span>
                             </el-form-item>
 
@@ -81,6 +94,11 @@
                 <el-table-column
                     label="手机"
                     prop="phone">
+                </el-table-column>
+
+                <el-table-column
+                    label="注册时间"
+                    prop="createTime">
                 </el-table-column>
                 <el-table-column label="操作" >
                     <template slot-scope="scope">
@@ -175,9 +193,7 @@
                 currentPage: 1,
                 selectTable: {},
                 dialogFormVisible: false,
-                categoryOptions: [],
-                selectedCategory: [],
-                address: {},
+
             }
         },
         created() {
@@ -348,6 +364,7 @@
                         tableData.phone = item.phone;
                         tableData.city = item.city;
                         tableData.headPortraitImg = item.headPortraitImg;
+                        tableData.createTime = item.createTime;
 
                         this.tableData.push(tableData);
                     })

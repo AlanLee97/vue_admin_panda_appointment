@@ -22,6 +22,7 @@
 
                         <el-menu-item index="addAdmin">添加管理员</el-menu-item>
                         <el-menu-item index="addAppointmentType">添加约拍类型</el-menu-item>
+                        <el-menu-item index="vueEdit">文本编辑</el-menu-item>
 <!--                        <el-menu-item index="addHomework">添加作业</el-menu-item>-->
 					</el-submenu>
 					<el-submenu index="4">
@@ -38,7 +39,7 @@
 <!--					</el-submenu>-->
 					<el-submenu index="5">
 						<template slot="title"><i class="el-icon-setting"></i>关于</template>
-						<el-menu-item index="adminSet">关于</el-menu-item>
+						<el-menu-item index="about">关于</el-menu-item>
 					</el-submenu>
 
 				</el-menu>
