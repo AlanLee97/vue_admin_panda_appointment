@@ -19,31 +19,29 @@
 
 <script>
     import headTop from '../../components/headTop'
-    import { quillEditor } from 'vue-quill-editor'
+    import {quillEditor} from 'vue-quill-editor'
 
     export default {
-        data(){
+        data() {
             return {
                 content: '<h3>文本编辑</h3>',
-			    editorOption: {
-
-		        }
+                editorOption: {}
             }
         },
-    	components: {
-    		headTop,
-    		quillEditor,
-    	},
+        components: {
+            headTop,
+            quillEditor,
+        },
         computed: {
-          	editor() {
-	        	return this.$refs.myQuillEditor.quill
-	      	}
+            editor() {
+                return this.$refs.myQuillEditor.quill
+            }
         },
         methods: {
-		    onEditorReady(editor) {
-		        console.log('editor ready!', editor)
-		    },
-		    submit(){
+            onEditorReady(editor) {
+                console.log('editor ready!', editor)
+            },
+            submit() {
                 console.log(this.content);
                 this.$message.success('提交成功！');
             }
@@ -52,15 +50,18 @@
 </script>
 
 <style lang="less">
-	@import '../../style/mixin';
-	.edit_container{
-		padding: 40px;
-		margin-bottom: 40px;
-	}
-	.editer{
-		height: 350px;
-	}
-	.submit_btn{
-		text-align: center;
-	}
+    @import '../../style/mixin';
+
+    .edit_container {
+        padding: 40px;
+        margin-bottom: 40px;
+    }
+
+    .editer {
+        height: 350px;
+    }
+
+    .submit_btn {
+        text-align: center;
+    }
 </style>

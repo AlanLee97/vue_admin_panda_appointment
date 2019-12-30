@@ -10,7 +10,7 @@
 </template>
 
 <script>
-	import headTop from '../../components/headTop';
+    import headTop from '../../components/headTop';
     import dtime from 'time-formater';
     import appointmentHistogram from "../../components/appointmentHistogram";
 
@@ -18,38 +18,38 @@
 
 
     export default {
-    	data(){
-    		return {
+        data() {
+            return {
                 appointmentHistogram: {},
                 sevenDay: [],
                 sevenDate: [],
-    		}
-    	},
-    	components: {
-    		headTop,
+            }
+        },
+        components: {
+            headTop,
             appointmentHistogram,
-    	},
-    	mounted(){
-    		console.log(this.appointmentHistogram);
+        },
+        mounted() {
+            console.log(this.appointmentHistogram);
             this.getSevenDayAppointmentCount();
 
             for (let i = 6; i > -1; i--) {
-                const date = dtime(new Date().getTime() - 86400000*i).format('YYYY-MM-DD');
+                const date = dtime(new Date().getTime() - 86400000 * i).format('YYYY-MM-DD');
                 this.sevenDay.push(date)
             }
 
-    	},
-    	methods: {
+        },
+        methods: {
 
             //获取七天约拍数量
-            getSevenDayAppointmentCount:function(){
+            getSevenDayAppointmentCount: function () {
                 let date = new Date();
                 let startDate = dtime(date.getTime() - 86400000 * 6).format('YYYY-MM-DD');
                 let endDate = this.formatDate(date);
 
                 request({
-                    method:'get',
-                    url:'/appointment/count/many' + "?startDate=" + startDate + "&endDate=" + endDate,
+                    method: 'get',
+                    url: '/appointment/count/many' + "?startDate=" + startDate + "&endDate=" + endDate,
                 }).then(res => {
                     // console.log(res);
                     res = res.data.data;
@@ -60,11 +60,11 @@
                     console.log(err);
                 })
             },
-    	}
+        }
     }
 </script>
 
 <style lang="less">
-	@import '../../style/mixin';
+    @import '../../style/mixin';
 
 </style>

@@ -6,7 +6,7 @@
             <el-col :span="12" :offset="6">
                 <div class="al-box-shadow-radius al-p-20px al-m-20px">
 
-                    <h3 class="al-font-weight-100 al-text-center al-m-10px">管理员信息</h3>
+                    <h3 class="al-font-weight-100 al-text-center al-m-10px">小组成员信息</h3>
 
                     <el-table
                         :data="tableData"
@@ -34,12 +34,12 @@
 </template>
 
 <script>
-	import headTop from '../components/headTop'
+    import headTop from '../components/headTop'
     import {mapState} from 'vuex'
     import {baseUrl, baseImgPath} from '@/config/env'
 
     export default {
-        data(){
+        data() {
             return {
                 tableData: [{
                     id: '17053007',
@@ -61,9 +61,9 @@
 
             }
         },
-    	components: {
-    		headTop,
-    	},
+        components: {
+            headTop,
+        },
         computed: {
             ...mapState(['adminInfo']),
         },
@@ -79,7 +79,8 @@
 </script>
 
 <style lang="less">
-	@import '../style/mixin';
+    @import '../style/mixin';
+
     .el-table .warning-row {
         background: oldlace;
     }

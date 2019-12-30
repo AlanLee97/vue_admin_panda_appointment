@@ -53,11 +53,16 @@
                   <template slot-scope="scope">
                     <el-button
                       size="mini"
-                      @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                      @click="handleEdit(scope.$index, scope.row)"
+                      class="el-icon-edit"
+                      type="primary"
+                    circle></el-button>
                     <el-button
                       size="mini"
                       type="danger"
-                      @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                      class="el-icon-delete"
+                      @click="handleDelete(scope.$index, scope.row)"
+                    circle></el-button>
                   </template>
                 </el-table-column>
             </el-table>
@@ -160,6 +165,7 @@
                             type: 'success',
                             message: '删除作品成功'
                         });
+
                         this.getWorksList();
                     }else {
                         this.$message({
@@ -235,6 +241,7 @@
                             type: 'success',
                             message: '修改作品成功'
                         });
+                        this.dialogFormVisible = false;
                         this.getWorksList();
                     }else{
                         this.$message({

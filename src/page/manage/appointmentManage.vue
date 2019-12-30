@@ -19,7 +19,8 @@
                     class=""
                     type="primary"
                     size="mini"
-                    @click="getAppointmentList()">查询</el-button>
+                    @click="getAppointmentList()">查询
+                </el-button>
 
             </div>
 
@@ -29,79 +30,84 @@
                 class="al-box-shadow-radius al-p-20px"
                 style="width: 100%">
                 <el-table-column type="expand">
-                  <template slot-scope="props">
-                    <el-form label-position="left" inline class="demo-table-expand">
-                      <el-form-item label="ID">
-                          <span>{{ props.row.id }}</span>
-                      </el-form-item>
-                        <el-form-item label="发布时间">
-                            <span>{{ props.row.date }}</span>
-                        </el-form-item>
-                      <el-form-item label="地址">
-                        <span>{{ props.row.address }}</span>
-                      </el-form-item>
-                      <el-form-item label="标题">
-                        <span>{{ props.row.title }}</span>
-                      </el-form-item>
-                      <el-form-item label="内容">
-                        <span>{{ props.row.ask }}</span>
-                      </el-form-item>
-                      <el-form-item label="发布者">
-                        <span>{{ props.row.userId }}</span>
-                      </el-form-item>
-                      <el-form-item label="约拍时间">
-                        <span>{{ props.row.startDatetime }}</span>
-                      </el-form-item>
+                    <template slot-scope="props">
+                        <el-form label-position="left" inline class="demo-table-expand">
+                            <el-form-item label="ID">
+                                <span>{{ props.row.id }}</span>
+                            </el-form-item>
+                            <el-form-item label="发布时间">
+                                <span>{{ props.row.date }}</span>
+                            </el-form-item>
+                            <el-form-item label="地址">
+                                <span>{{ props.row.address }}</span>
+                            </el-form-item>
+                            <el-form-item label="标题">
+                                <span>{{ props.row.title }}</span>
+                            </el-form-item>
+                            <el-form-item label="内容">
+                                <span>{{ props.row.ask }}</span>
+                            </el-form-item>
+                            <el-form-item label="发布者">
+                                <span>{{ props.row.userId }}</span>
+                            </el-form-item>
+                            <el-form-item label="约拍时间">
+                                <span>{{ props.row.startDatetime }}</span>
+                            </el-form-item>
 
-                      <el-form-item label="约拍类型">
-                        <span>{{ props.row.aptTypeId }}</span>
-                      </el-form-item>
-                        <el-form-item label="约拍费用">
-                            <span>{{ props.row.fee }}</span>
-                        </el-form-item>
-                      <el-form-item label="封面">
+                            <el-form-item label="约拍类型">
+                                <span>{{ props.row.aptTypeId }}</span>
+                            </el-form-item>
+                            <el-form-item label="约拍费用">
+                                <span>{{ props.row.fee }}</span>
+                            </el-form-item>
+                            <el-form-item label="封面">
                         <span>
                             <img class="al-width-50" :src="props.row.image" alt="">
                         </span>
-                      </el-form-item>
-                    </el-form>
-                  </template>
+                            </el-form-item>
+                        </el-form>
+                    </template>
                 </el-table-column>
                 <el-table-column
-                  label="ID"
-                  prop="id">
+                    label="ID"
+                    prop="id">
                 </el-table-column>
                 <el-table-column
-                  label="标题"
-                  prop="title">
+                    label="标题"
+                    prop="title">
                 </el-table-column>
                 <el-table-column
-                  label="内容"
-                  prop="ask">
+                    label="内容"
+                    prop="ask">
                 </el-table-column>
 
                 <el-table-column label="操作" width="200">
-                  <template slot-scope="scope">
-                    <el-button
-                      size="mini"
-                      @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button
-                      size="mini"
-                      type="danger"
-                      @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                  </template>
+                    <template slot-scope="scope">
+                        <el-button
+                            size="mini"
+                            @click="handleEdit(scope.$index, scope.row)"
+                            class="el-icon-edit"
+                            type="primary"
+                            circle></el-button>
+                        <el-button
+                            size="mini"
+                            type="danger"
+                            class="el-icon-delete"
+                            @click="handleDelete(scope.$index, scope.row)"
+                            circle></el-button>
+                    </template>
                 </el-table-column>
 
 
             </el-table>
             <div class="Pagination">
                 <el-pagination
-                  @size-change="handleSizeChange"
-                  @current-change="handleCurrentChange"
-                  :current-page="currentPage"
-                  :page-size="20"
-                  layout="total, prev, pager, next"
-                  :total="count">
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-size="20"
+                    layout="total, prev, pager, next"
+                    :total="count">
                 </el-pagination>
             </div>
             <el-dialog title="约拍列表" :visible.sync="dialogFormVisible">
@@ -109,7 +115,7 @@
                     <el-form-item label="ID" label-width="100px">
                         <el-input v-model="selectTable.id" auto-complete="off" disabled></el-input>
                     </el-form-item>
-                    <el-form-item label="发布时间" label-width="100px" >
+                    <el-form-item label="发布时间" label-width="100px">
                         <el-input v-model="selectTable.date" disabled></el-input>
                     </el-form-item>
                     <el-form-item label="标题" label-width="100px">
@@ -136,10 +142,10 @@
                     </el-form-item>
 
                 </el-form>
-              <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="updateAppointmentInfo()">确 定</el-button>
-              </div>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="updateAppointmentInfo()">确 定</el-button>
+                </div>
             </el-dialog>
         </div>
     </div>
@@ -150,7 +156,7 @@
     import {request} from "../../util/network/request";
 
     export default {
-        data(){
+        data() {
             return {
                 type: 0,
                 city: {},
@@ -166,14 +172,14 @@
                 address: {},
             }
         },
-        created(){
+        created() {
 
             this.getAppointmentList();
             console.log(11111)
         },
-    	components: {
-    		headTop,
-    	},
+        components: {
+            headTop,
+        },
         methods: {
 
             handleSizeChange(val) {
@@ -181,7 +187,7 @@
             },
             handleCurrentChange(val) {
                 this.currentPage = val;
-                this.offset = (val - 1)*this.limit;
+                this.offset = (val - 1) * this.limit;
                 this.getAppointmentList()
             },
             handleEdit(index, row) {
@@ -194,28 +200,30 @@
             handleDelete(index, row) {
                 console.log(row.id);
                 let data = {
-                    worksId:row.id
+                    aptId: row.id
                 };
                 request({
-                    method: 'post',
-                    url:'/appointment/delete',
-                    headers:{
+                    method: 'get',
+                    url: '/appointment/delete/apt' + "?aptId=" + row.id,
+                    headers: {
                         "content-type": "application/x-www-form-urlencoded"
                     },
-                    data:this.qsParam(data)
+                    // data: this.qsParam(data)
                 }).then(res => {
                     console.log(res);
-                    if (res.data.code == 200){
+                    if (res.data.code == 200) {
                         this.$message({
                             type: 'success',
                             message: '删除约拍成功'
                         });
+                        this.dialogFormVisible = false;
                         this.getAppointmentList();
-                    }else {
+                    } else {
                         this.$message({
                             type: 'error',
                             message: '删除约拍失败'
                         });
+
                         console.log('删除约拍失败')
                     }
 
@@ -230,33 +238,35 @@
 
 
             //更新约拍
-            updateAppointmentInfo:function () {
+            updateAppointmentInfo: function () {
                 this.selectTable.startDatetime = this.formatDate(this.selectTable.startDatetime);
 
                 let data = this.selectTable;
                 console.log(data);
                 request({
-                    method:'post',
-                    url:'/appointment/update',
-                    headers:{
+                    method: 'post',
+                    url: '/appointment/update',
+                    headers: {
                         "content-type": "application/x-www-form-urlencoded"
                     },
 
-                    data:this.qsParam(data)
+                    data: this.qsParam(data)
 
                 }).then(res => {
                     console.log(res);
-                    if (res.data.code == 200){
+                    if (res.data.code == 200) {
                         this.$message({
                             type: 'success',
                             message: '修改约拍成功'
                         });
+                        this.dialogFormVisible = false;
                         this.getAppointmentList();
-                    }else{
+                    } else {
                         this.$message({
                             type: 'error',
                             message: '修改约拍失败'
                         });
+
                     }
 
                 }).catch(err => {
@@ -270,13 +280,13 @@
 
 
             //获取约拍
-            getAppointmentList:function () {
+            getAppointmentList: function () {
 
                 console.log(this.type);
 
                 request({
-                    method:'get',
-                    url:'/appointment/get/type' + "?type=" + this.type
+                    method: 'get',
+                    url: '/appointment/get/type' + "?type=" + this.type
                 }).then(res => {
                     console.log(res);
                     const appointmentList = res.data.data;
@@ -305,7 +315,7 @@
             },
 
 
-            formatDate:function (time) {
+            formatDate: function (time) {
                 let date = new Date(time);
                 let str = date.getFullYear() + '-' +
                     (date.getMonth() + 1) + '-' +
@@ -317,27 +327,33 @@
 </script>
 
 <style lang="less">
-	@import '../../style/mixin';
+    @import '../../style/mixin';
+
     .demo-table-expand {
         font-size: 0;
     }
+
     .demo-table-expand label {
         width: 90px;
         color: #99a9bf;
     }
+
     .demo-table-expand .el-form-item {
         margin-right: 0;
         margin-bottom: 0;
         width: 50%;
     }
-    .table_container{
+
+    .table_container {
         padding: 20px;
     }
-    .Pagination{
+
+    .Pagination {
         display: flex;
         justify-content: flex-start;
         margin-top: 8px;
     }
+
     .avatar-uploader .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
@@ -345,9 +361,11 @@
         position: relative;
         overflow: hidden;
     }
+
     .avatar-uploader .el-upload:hover {
         border-color: #20a0ff;
     }
+
     .avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
@@ -356,6 +374,7 @@
         line-height: 120px;
         text-align: center;
     }
+
     .avatar {
         width: 120px;
         height: 120px;

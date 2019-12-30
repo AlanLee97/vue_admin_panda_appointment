@@ -9,35 +9,33 @@
 </template>
 
 <script>
-	import headTop from '../../components/headTop'
+    import headTop from '../../components/headTop'
     import userCityGeoMap from "../../components/userCityPie";
 
     import {request} from '../../util/network/request'
 
 
     export default {
-    	data:function(){
-    		return {
+        data: function () {
+            return {
 
-    			userCityCount: [
-
-                ],
-    		}
-    	},
-    	components: {
-    		headTop,
+                userCityCount: [],
+            }
+        },
+        components: {
+            headTop,
             userCityGeoMap,
-    	},
-    	mounted(){
-    		this.getUserCityCount();
+        },
+        mounted() {
+            this.getUserCityCount();
 
-    	},
-    	methods: {
-    		getUserCityCount:function () {
-    		    let that = this;
+        },
+        methods: {
+            getUserCityCount: function () {
+                let that = this;
                 request({
-                    method:'get',
-                    url:'/user/get/count/city'
+                    method: 'get',
+                    url: '/user/get/count/city'
                 }).then(res => {
                     console.log(res);
                     this.userCityCount = res.data.data;
@@ -48,17 +46,16 @@
                     }, 1000);
 
 
-
                 }).catch((err) => {
                     console.log(err);
                 });
 
             }
-    	}
+        }
     }
 </script>
 
 <style lang="less">
-	@import '../../style/mixin';
+    @import '../../style/mixin';
 
 </style>

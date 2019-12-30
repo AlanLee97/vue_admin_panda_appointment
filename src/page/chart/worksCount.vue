@@ -11,7 +11,7 @@
 </template>
 
 <script>
-	import headTop from '../../components/headTop';
+    import headTop from '../../components/headTop';
     import dtime from 'time-formater';
     import worksHistogram from "../../components/worksHistogram";
 
@@ -19,34 +19,34 @@
 
 
     export default {
-    	data(){
-    		return {
+        data() {
+            return {
                 sevenDay: [],
                 sevenDate: [],
-    		}
-    	},
-    	components: {
-    		headTop,
+            }
+        },
+        components: {
+            headTop,
             worksHistogram
-    	},
-    	mounted(){
-    	    this.getSevenDayWorksCount();
+        },
+        mounted() {
+            this.getSevenDayWorksCount();
 
             for (let i = 6; i > -1; i--) {
-                const date = dtime(new Date().getTime() - 86400000*i).format('YYYY-MM-DD');
+                const date = dtime(new Date().getTime() - 86400000 * i).format('YYYY-MM-DD');
                 this.sevenDay.push(date)
             }
-    	},
-    	methods: {
+        },
+        methods: {
             //获取七天作品数量
-            getSevenDayWorksCount:function(){
+            getSevenDayWorksCount: function () {
                 let date = new Date();
                 let startDate = dtime(date.getTime() - 86400000 * 6).format('YYYY-MM-DD');
                 let endDate = this.formatDate(date);
 
                 request({
-                    method:'get',
-                    url:'/works/count/many' + "?startDate=" + startDate + "&endDate=" + endDate,
+                    method: 'get',
+                    url: '/works/count/many' + "?startDate=" + startDate + "&endDate=" + endDate,
                 }).then(res => {
                     // console.log(res);
                     res = res.data.data;
@@ -58,11 +58,11 @@
                 })
             },
 
-    	}
+        }
     }
 </script>
 
 <style lang="less">
-	@import '../../style/mixin';
+    @import '../../style/mixin';
 
 </style>

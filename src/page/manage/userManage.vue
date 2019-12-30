@@ -18,7 +18,8 @@
                     class=""
                     type="primary"
                     size="mini"
-                    @click="getAllUsers()">查询</el-button>
+                    @click="getAllUsers()">查询
+                </el-button>
 
             </div>
 
@@ -70,7 +71,6 @@
                             </el-form-item>
 
 
-
                             <el-form-item label="头像" class="width-100">
                                 <span>
                                     <img :src="props.row.headPortraitImg" alt="" class="al-icon-size-150px al-d-il-blk">
@@ -100,12 +100,13 @@
                     label="注册时间"
                     prop="createTime">
                 </el-table-column>
-                <el-table-column label="操作" >
+                <el-table-column label="操作">
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
                             @click="handleEdit(scope.$index, scope.row)"
                             class="el-icon-edit"
+                            type="primary"
                             circle>
                         </el-button>
                         <el-button
@@ -130,7 +131,7 @@
                     :total="count">
                 </el-pagination>
             </div>
-            <el-dialog title="修改用户信息"  :visible.sync="dialogFormVisible">
+            <el-dialog title="修改用户信息" :visible.sync="dialogFormVisible">
                 <el-form :model="selectTable">
                     <el-form-item label="id" label-width="100px">
                         <el-input v-model="selectTable.id" auto-complete="off" disabled></el-input>
@@ -139,7 +140,7 @@
                         <el-input v-model="selectTable.username" disabled></el-input>
                     </el-form-item>
                     <el-form-item label="昵称" label-width="100px">
-                        <el-input v-model="selectTable.nickname" ></el-input>
+                        <el-input v-model="selectTable.nickname"></el-input>
                     </el-form-item>
 
                     <el-form-item label="年龄" label-width="100px">
@@ -210,7 +211,7 @@
         methods: {
 
             //弹窗确认
-            confirmDelete:function(row){
+            confirmDelete: function (row) {
                 this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
@@ -230,7 +231,7 @@
             },
 
             //删除用户
-            deleteUser: function(row){
+            deleteUser: function (row) {
                 request({
                     method: 'get',
                     url: '/user/delete?uid=' + row.id,
@@ -291,12 +292,12 @@
             updateUserInfo: function () {
                 let data = {
                     uid: this.selectTable.id,
-                    isAuthenticated:this.selectTable.isAuthenticated,
-                    age:this.selectTable.age,
-                    gender:this.selectTable.gender,
-                    city:this.selectTable.city,
-                    identity:this.selectTable.identity,
-                    nickname:this.selectTable.nickname,
+                    isAuthenticated: this.selectTable.isAuthenticated,
+                    age: this.selectTable.age,
+                    gender: this.selectTable.gender,
+                    city: this.selectTable.city,
+                    identity: this.selectTable.identity,
+                    nickname: this.selectTable.nickname,
                 };
                 console.log(data);
                 request({
@@ -315,6 +316,7 @@
                             type: 'success',
                             message: '修改用户成功'
                         });
+                        this.dialogFormVisible = false;
                         this.getAllUsers();
                     } else {
                         this.$message({

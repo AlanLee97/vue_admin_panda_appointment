@@ -12,9 +12,9 @@
                         ref="formData"
                         label-width="100px"
                         class="demo-formData">
-                        <el-form-item label="用户ID" prop="userID" >
+                        <el-form-item label="用户ID" prop="userID">
                             <div class="al-width-90">
-                                <el-input v-model="formData.uid" ></el-input>
+                                <el-input v-model="formData.uid"></el-input>
                             </div>
                         </el-form-item>
 
@@ -47,16 +47,16 @@
     import {request} from "../../util/network/request";
 
     export default {
-        data(){
+        data() {
             return {
-                action:'',//setAdmin,cancelAdmin
+                action: '',//setAdmin,cancelAdmin
                 city: {},
                 formData: {
                     uid: '', //用户userID
                 },
                 rules: {
                     userID: [
-                        { required: true, message: '请输入用户ID', trigger: 'blur' },
+                        {required: true, message: '请输入用户ID', trigger: 'blur'},
                     ],
 
 
@@ -67,29 +67,29 @@
         components: {
             headTop,
         },
-        mounted(){
+        mounted() {
 
         },
         methods: {
             //设置管理员
-            setAdmin:function(){
+            setAdmin: function () {
                 let data = {
-                    uid:this.formData.uid,
-                    identity:0
+                    uid: this.formData.uid,
+                    identity: 0
                 };
 
                 request({
-                    method:'post',
-                    url:'/user/set/admin',
-                    headers:{
+                    method: 'post',
+                    url: '/user/set/admin',
+                    headers: {
                         "content-type": "application/x-www-form-urlencoded"
                     },
-                    data:this.qsParam(data)
+                    data: this.qsParam(data)
 
                 }).then(res => {
                     console.log(res);
                     const code = res.data.code;
-                    if (code === 200){
+                    if (code === 200) {
                         this.$message({
                             type: 'success',
                             message: '添加成功',
@@ -104,23 +104,23 @@
             },
 
             //取消管理员
-            cancelAdmin:function(){
+            cancelAdmin: function () {
                 let data = {
-                    uid:this.formData.uid,
-                    identity:3
+                    uid: this.formData.uid,
+                    identity: 3
                 };
                 request({
-                    method:'post',
-                    url:'/user/set/admin',
-                    headers:{
+                    method: 'post',
+                    url: '/user/set/admin',
+                    headers: {
                         "content-type": "application/x-www-form-urlencoded"
                     },
-                    data:this.qsParam(data)
+                    data: this.qsParam(data)
 
                 }).then(res => {
                     console.log(res);
                     const code = res.data.code;
-                    if (code === 200){
+                    if (code === 200) {
                         this.$message({
                             type: 'success',
                             message: '取消成功',
@@ -138,9 +138,9 @@
             submitForm(formName, action) {
                 this.$refs[formName].validate(async (valid) => {
                     if (valid) {
-                        if (action === "setAdmin"){
+                        if (action === "setAdmin") {
                             this.setAdmin();
-                        }else if (action === "cancelAdmin"){
+                        } else if (action === "cancelAdmin") {
                             this.cancelAdmin();
                         }
 
@@ -162,9 +162,11 @@
 
 <style lang="less">
     @import '../../style/mixin';
-    .button_submit{
+
+    .button_submit {
         text-align: center;
     }
+
     .avatar-uploader .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;
@@ -172,9 +174,11 @@
         position: relative;
         overflow: hidden;
     }
+
     .avatar-uploader .el-upload:hover {
         border-color: #20a0ff;
     }
+
     .avatar-uploader-icon {
         font-size: 28px;
         color: #8c939d;
@@ -183,11 +187,13 @@
         line-height: 120px;
         text-align: center;
     }
+
     .avatar {
         width: 120px;
         height: 120px;
         display: block;
     }
+
     .el-table .info-row {
         background: #c9e5f5;
     }

@@ -4,26 +4,32 @@
 
         <div :v-loading="loadingDisabled">
             <el-row>
-                <el-col :span="2"><pre> </pre></el-col>
+                <el-col :span="2">
+                    <pre> </pre>
+                </el-col>
                 <el-col :span="20">
                     <el-row>
                         <el-col :span="12" class="al-p-10px" v-for="(item, index) in formData" :key="index">
                             <div class="al-box-shadow-radius al-p-20px al-m-10px">
-<!--                                <span class="demonstration">默认</span>-->
+                                <!--                                <span class="demonstration">默认</span>-->
                                 <el-image :src="item.imgUrl" :preview-src-list="images"></el-image>
 
-                                <div class="al-font-weight-100 al-fontsize-20px al-text-color-light-black al-p-top-10px">
+                                <div
+                                    class="al-font-weight-100 al-fontsize-20px al-text-color-light-black al-p-top-10px">
                                     <span>标题：</span>
                                     {{item.title}}
                                 </div>
-                                <div class="al-font-weight-100 al-fontsize-10px al-text-color-light-black al-p-top-10px">
+                                <div
+                                    class="al-font-weight-100 al-fontsize-10px al-text-color-light-black al-p-top-10px">
                                     <span>链接：</span>
                                     {{item.link}}
                                 </div>
 
                                 <el-divider>
-                                    <el-button type="primary" icon="el-icon-edit" circle @click="editImageInfo(item)"></el-button>
-                                    <el-button type="danger" icon="el-icon-delete" circle @click="confirmDelete(item.id)"></el-button>
+                                    <el-button type="primary" icon="el-icon-edit" circle
+                                               @click="editImageInfo(item)"></el-button>
+                                    <el-button type="danger" icon="el-icon-delete" circle
+                                               @click="confirmDelete(item.id)"></el-button>
                                 </el-divider>
                             </div>
                         </el-col>
@@ -44,7 +50,7 @@
 
 
         <!-- 编辑图片信息 -->
-        <el-dialog :title="dialogTitle" :visible.sync="editDialogVisible" >
+        <el-dialog :title="dialogTitle" :visible.sync="editDialogVisible">
 
             <!-- 图片上传 -->
 
@@ -90,7 +96,7 @@
             </div>
 
             <!-- 表单 -->
-            <el-form >
+            <el-form>
                 <el-form-item label="标题" label-width="100">
                     <el-input v-model="editFormData.title" autocomplete="off"></el-input>
                 </el-form-item>
@@ -118,7 +124,7 @@
                 确认要删除图片？
             </span>
 
-            <span slot="footer" >
+            <span slot="footer">
                 <el-button @click="deleteDialogVisible = false">取消</el-button>
                 <el-button @click="deleteImage()" type="primary">确定</el-button>
             </span>
@@ -129,7 +135,6 @@
         <el-dialog :visible.sync="imgPreviewDialogVisible">
             <img width="100%" :src="previewImageUrl" alt="">
         </el-dialog>
-
 
 
     </div>
@@ -143,48 +148,48 @@
 
     export default {
         name: "carouselManage",
-        components:{
+        components: {
             headTop,
 
         },
         mounted() {
             this.getAllCarousel();
         },
-        data:function () {
+        data: function () {
             return {
-                formData:{},
-                editFormData:{
-                    id:'',
-                    title:'',
-                    link:'',
-                    imgUrl:''
+                formData: {},
+                editFormData: {
+                    id: '',
+                    title: '',
+                    link: '',
+                    imgUrl: ''
                 },
-                flag:true,
-                imgFit:'scale-down',
-                editDialogVisible:false,
-                deleteDialogVisible:false,
-                imgPreviewDialogVisible:false,
-                previewImageUrl:'',
-                images:[],
-                dialogTitle:'',
-                uploadData:{//上传图片时需要用户id
-                    uid:1
+                flag: true,
+                imgFit: 'scale-down',
+                editDialogVisible: false,
+                deleteDialogVisible: false,
+                imgPreviewDialogVisible: false,
+                previewImageUrl: '',
+                images: [],
+                dialogTitle: '',
+                uploadData: {//上传图片时需要用户id
+                    uid: 1
                 },
-                uploadImgUrl:this.createUrl('/upload/return-url'),  //图片上传的地址
-                disabled:false,
-                loadingDisabled:true,
+                uploadImgUrl: this.createUrl('/upload/return-url'),  //图片上传的地址
+                disabled: false,
+                loadingDisabled: true,
 
-                loading:null,
-                confirmDeleteId:'',
+                loading: null,
+                confirmDeleteId: '',
 
 
             }
         },
 
-        methods:{
-            getAllCarousel:function(){
+        methods: {
+            getAllCarousel: function () {
                 request({
-                    url:'/carousel/get/all'
+                    url: '/carousel/get/all'
                 }).then(res => {
                     console.log(res);
                     res = res.data.data;
@@ -199,14 +204,14 @@
             },
 
             //显示对话框
-            showDialog:function(){
+            showDialog: function () {
                 this.editFormData = {};
                 this.dialogTitle = "添加轮播图";
                 this.editDialogVisible = true;
             },
 
             //提交表单
-            submitForm:function(title){
+            submitForm: function (title) {
                 console.log(title);
                 this.startUpload();
                 this.openFullScreen();
@@ -214,29 +219,29 @@
             },
 
             //添加轮播图
-            addImage:function(){
+            addImage: function () {
                 let data = {
-                    title:this.editFormData.title,
-                    link:this.editFormData.link,
-                    imgUrl:this.editFormData.imgUrl
+                    title: this.editFormData.title,
+                    link: this.editFormData.link,
+                    imgUrl: this.editFormData.imgUrl
                 };
 
                 console.log(data);
                 request({
-                    url:'/carousel/add',
-                    method:'post',
-                    data:this.qsParam(data),
-                    headers:{
+                    url: '/carousel/add',
+                    method: 'post',
+                    data: this.qsParam(data),
+                    headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
                 }).then(res => {
                     console.log(res);
-                    if (res.data.code == 200){
+                    if (res.data.code == 200) {
                         this.editDialogVisible = false;
                         this.loading.close();
                         this.$message.success('添加成功');
                         this.getAllCarousel();
-                    }else {
+                    } else {
                         this.$message.error("添加失败");
                     }
                 }).catch(err => {
@@ -247,7 +252,7 @@
             },
 
             //编辑图片信息
-            editImageInfo:function (item) {
+            editImageInfo: function (item) {
                 this.editDialogVisible = true;
                 this.dialogTitle = "编辑轮播图";
                 console.log(item);
@@ -258,32 +263,32 @@
             },
 
             //更新轮播图信息
-            updateImageInfo:function(){
+            updateImageInfo: function () {
 
                 this.startUpload();
 
 
                 let data = {
-                    id:this.editFormData.id,
-                    title:this.editFormData.title,
-                    link:this.editFormData.link,
-                    imgUrl:this.editFormData.imgUrl
+                    id: this.editFormData.id,
+                    title: this.editFormData.title,
+                    link: this.editFormData.link,
+                    imgUrl: this.editFormData.imgUrl
                 };
                 request({
-                    url:'/carousel/update',
-                    method:'post',
-                    data:this.qsParam(data),
-                    headers:{
+                    url: '/carousel/update',
+                    method: 'post',
+                    data: this.qsParam(data),
+                    headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
                 }).then(res => {
                     console.log(res);
-                    if (res.data.code == 200){
+                    if (res.data.code == 200) {
                         this.editDialogVisible = false;
                         this.loading.close();
                         this.$message.success('更新成功');
                         this.getAllCarousel();
-                    }else {
+                    } else {
                         this.$message.error("更新失败");
                         this.loading.close();
                     }
@@ -296,33 +301,33 @@
 
 
             //确认删除弹窗
-            confirmDelete:function(id){
+            confirmDelete: function (id) {
                 this.deleteDialogVisible = true;
                 this.confirmDeleteId = id;
             },
 
 
             //删除图片信息
-            deleteImage:function () {
+            deleteImage: function () {
 
                 let data = {
-                    id:this.confirmDeleteId
+                    id: this.confirmDeleteId
                 };
 
                 request({
-                    url:'/carousel/delete',
-                    method:'post',
-                    data:this.qsParam(data),
-                    headers:{
+                    url: '/carousel/delete',
+                    method: 'post',
+                    data: this.qsParam(data),
+                    headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
                 }).then(res => {
                     console.log(res);
-                    if (res.data.code == 200){
+                    if (res.data.code == 200) {
                         this.deleteDialogVisible = false;
                         this.$message.success('删除成功');
                         this.getAllCarousel();
-                    }else {
+                    } else {
                         this.$message.error("删除失败");
                     }
                 }).catch(err => {
@@ -334,10 +339,9 @@
             },
 
 
-            uploadImg:function(){
+            uploadImg: function () {
 
             },
-
 
 
             handleRemove(file) {
@@ -349,23 +353,23 @@
             },
 
             //开始图片上传
-            startUpload:function () {
+            startUpload: function () {
                 console.log('开始图片上传');
                 this.$refs.uploadImg.submit();
             },
 
 
             //图片上传成功后的回调函数
-            uploadSuccess:function(res, file, fileList){
+            uploadSuccess: function (res, file, fileList) {
                 console.log(res);
                 this.editFormData.imgUrl = res;
 
                 console.log("图片上传成功");
 
-                if (this.dialogTitle === "编辑轮播图"){
+                if (this.dialogTitle === "编辑轮播图") {
                     this.updateImageInfo();
 
-                }else if (this.dialogTitle === "添加轮播图"){
+                } else if (this.dialogTitle === "添加轮播图") {
                     this.addImage();
 
                 }
@@ -373,7 +377,7 @@
             },
 
             //上传失败
-            uploadFail:function (err) {
+            uploadFail: function (err) {
                 console.log('上传图片失败');
                 console.log(err);
             },
@@ -394,7 +398,6 @@
 </script>
 
 <style>
-
 
 
 </style>

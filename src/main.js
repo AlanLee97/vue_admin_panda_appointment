@@ -195,8 +195,8 @@ Vue.prototype.formatDate = function (time) {
     return str
 };
 
-// let domain = '47.103.204.62';
-let domain = 'localhost';
+let domain = '47.103.204.62';
+// let domain = 'localhost';
 let port = '8083';
 
 // 生成url的函数
