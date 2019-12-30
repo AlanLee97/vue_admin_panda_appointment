@@ -53,9 +53,11 @@
             initData() {
                 this.getData();
 
+                const colors = ['#3baeff', '#ff5357', '#00c788','#b8bcb9', '#fcf233'];
+
 
                 const option = {
-
+                    color: colors,
                     title: {
                         text: '用户城市统计',
                         subtext: '城市分布',
@@ -93,7 +95,7 @@
                     ]
                 };
 
-                this.myChart.setOption(option);
+                this.myChart.setOption(option, true);
             }
         },
         watch: {

@@ -1,7 +1,10 @@
 <template>
     <div>
         <head-top></head-top>
-        <user-city-geo-map :userCityCount="userCityCount"></user-city-geo-map>
+
+        <div class="al-box-shadow-radius al-p-20px al-m-20px">
+            <user-city-geo-map :userCityCount="userCityCount"></user-city-geo-map>
+        </div>
     </div>
 </template>
 

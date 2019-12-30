@@ -16,13 +16,22 @@
     import 'echarts/lib/component/tooltip';
     export default {
         mounted(){
-            this.myChart = echarts.init(document.getElementById('line1'));
+            this.myChart = echarts.init(document.getElementById('line1'), 'light');
             this.initData();
+            console.log(this.sevenDate);
+
         },
+
+        created(){
+
+        },
+
         props: ['sevenDate', 'sevenDay'],
+
         methods: {
             initData(){
-                const colors = ['#5793f3', '#675bba', '#d14a61'];
+                console.log(this.sevenDate);
+                const colors = ['#00b0ff', '#ff3519', '#00ffae'];
                 const option = {
                     color: colors,
                     title: {
@@ -33,7 +42,7 @@
                         trigger: 'axis'
                     },
                     legend: {
-                        data:['新增用户', '新增约拍', '新增作品']
+                        data:['用户', '约拍', '作品']
                     },
                     toolbox: {
                         show: true,
@@ -54,9 +63,9 @@
                     yAxis: [
                         {
                           type: 'value',
-                          name: '用户',
+                          name: '数量',
                           min: 0,
-                          max: 200,
+                          max: 20,
                           position: 'left',
                           axisLine: {
                               lineStyle: {
@@ -66,41 +75,14 @@
                           axisLabel: {
                               formatter: '{value}'
                           }
-                        },
-                        {
-                          type: 'value',
-                          name: '作业',
-                          min: 0,
-                          max: 200,
-                          position: 'right',
-                          axisLine: {
-                              lineStyle: {
-                                  color: '#999'
-                              }
-                          },
-                          axisLabel: {
-                              formatter: '{value}'
-                          }
-                        },
+                        }
                     ],
                     series: [
                         {
-                            name:'作业',
-                            type:'line',
-                            data:this.sevenDate[0],
-                            yAxisIndex: 1,
-                            markPoint: {
-                                data: [
-                                    {type: 'max', name: '最大值'},
-                                    {type: 'min', name: '最小值'}
-                                ]
-                            },
-                        },
-                        {
                             name:'用户',
                             type:'line',
-                            data:this.sevenDate[1],
-                            yAxisIndex: 1,
+                            data:this.sevenDate[0],
+                            yAxisIndex: 0,
                             markPoint: {
                                 data: [
                                     {type: 'max', name: '最大值'},
@@ -109,10 +91,22 @@
                             },
                         },
                         {
-                            name:'管理员',
+                            name:'约拍',
+                            type:'line',
+                            data:this.sevenDate[1],
+                            yAxisIndex: 0,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
+                                ]
+                            },
+                        },
+                        {
+                            name:'作品',
                             type:'line',
                             data:this.sevenDate[2],
-                            yAxisIndex: 1,
+                            yAxisIndex: 0,
                             markPoint: {
                                 data: [
                                     {type: 'max', name: '最大值'},
@@ -125,6 +119,7 @@
                 this.myChart.setOption(option);
             }
         },
+
         watch: {
             sevenDate: function (){
                 this.initData()

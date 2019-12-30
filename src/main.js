@@ -187,7 +187,27 @@ Vue.prototype.$message = Message;
 
 Vue.use(Image);
 
+Vue.prototype.formatDate = function (time) {
+    let date = new Date(time);
+    let str = date.getFullYear() + '-' +
+        (date.getMonth() + 1) + '-' +
+        date.getDate();
+    return str
+};
 
+// let domain = '47.103.204.62';
+let domain = 'localhost';
+let port = '8083';
+
+// 生成url的函数
+Vue.prototype.createUrl = function (url) {
+    return 'http://' + domain + ':' + port + url;
+};
+
+//字符串化参数
+Vue.prototype.qsParam = function(data){
+    return Qs.stringify(data);
+};
 
 new Vue({
 	el: '#app',

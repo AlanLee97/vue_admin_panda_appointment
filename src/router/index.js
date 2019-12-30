@@ -25,7 +25,6 @@ const appointmentCount = r => require.ensure([], () => r(require('@/page/chart/a
 const worksCount = r => require.ensure([], () => r(require('@/page/chart/worksCount')), 'worksCount');
 
 //其他
-const uploadImg = r => require.ensure([], () => r(require('@/page/uploadImg')), 'uploadImg');
 const vueEdit = r => require.ensure([], () => r(require('@/page/add/vueEdit')), 'vueEdit');
 const about = r => require.ensure([], () => r(require('@/page/about')), 'about');
 
@@ -89,10 +88,6 @@ const routes = [
             component: worksCount,
             meta: ['图表', '作品统计'],
         },{
-			path: '/uploadImg',
-			component: uploadImg,
-			meta: ['图片上传', '图片上传'],
-		},{
 			path: '/vueEdit',
 			component: vueEdit,
 			meta: ['编辑', '文本编辑'],

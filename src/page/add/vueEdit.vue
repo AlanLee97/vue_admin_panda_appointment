@@ -1,16 +1,18 @@
 <template>
     <div>
         <head-top></head-top>
-        <div class="edit_container">
-        	<quill-editor v-model="content"
-                ref="myQuillEditor"
-                class="editer"
-                :options="editorOption"
-                @ready="onEditorReady($event)">
-  			</quill-editor>
-        </div>
-        <div class="submit_btn">
-  			<el-button type="primary" @click="submit">提交</el-button>
+        <div class="al-box-shadow-radius al-p-20px al-m-20px">
+            <div class="edit_container">
+                <quill-editor v-model="content"
+                              ref="myQuillEditor"
+                              class="editer"
+                              :options="editorOption"
+                              @ready="onEditorReady($event)">
+                </quill-editor>
+            </div>
+            <div class="submit_btn">
+                <el-button type="primary" @click="submit">提交</el-button>
+            </div>
         </div>
     </div>
 </template>

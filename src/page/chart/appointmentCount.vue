@@ -1,12 +1,17 @@
 <template>
     <div>
         <head-top></head-top>
-        <appointment-histogram :appointmentHistogram="appointmentHistogram"></appointment-histogram>
+
+        <div class="al-box-shadow-radius al-p-20px al-m-20px">
+            <appointment-histogram :sevenDate='sevenDate' :sevenDay='sevenDay'></appointment-histogram>
+
+        </div>
     </div>
 </template>
 
 <script>
-	import headTop from '../../components/headTop'
+	import headTop from '../../components/headTop';
+    import dtime from 'time-formater';
     import appointmentHistogram from "../../components/appointmentHistogram";
 
     import {request} from '../../util/network/request'
@@ -16,6 +21,8 @@
     	data(){
     		return {
                 appointmentHistogram: {},
+                sevenDay: [],
+                sevenDate: [],
     		}
     	},
     	components: {
@@ -23,21 +30,36 @@
             appointmentHistogram,
     	},
     	mounted(){
-    		//this.getHomeworkCount();
     		console.log(this.appointmentHistogram);
+            this.getSevenDayAppointmentCount();
+
+            for (let i = 6; i > -1; i--) {
+                const date = dtime(new Date().getTime() - 86400000*i).format('YYYY-MM-DD');
+                this.sevenDay.push(date)
+            }
+
     	},
     	methods: {
-    		getHomeworkCount:function () {
+
+            //获取七天约拍数量
+            getSevenDayAppointmentCount:function(){
+                let date = new Date();
+                let startDate = dtime(date.getTime() - 86400000 * 6).format('YYYY-MM-DD');
+                let endDate = this.formatDate(date);
+
                 request({
                     method:'get',
-                    url:'/user/get/count/city'
+                    url:'/appointment/count/many' + "?startDate=" + startDate + "&endDate=" + endDate,
                 }).then(res => {
-                    console.log(res);
-                    this.appointmentHistogram = res.data.data;
+                    // console.log(res);
+                    res = res.data.data;
+                    this.sevenDate = res;
+                    // console.log(res);
+
                 }).catch(err => {
                     console.log(err);
                 })
-            }
+            },
     	}
     }
 </script>

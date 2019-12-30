@@ -104,12 +104,16 @@
                     <template slot-scope="scope">
                         <el-button
                             size="mini"
-                            @click="handleEdit(scope.$index, scope.row)">编辑
+                            @click="handleEdit(scope.$index, scope.row)"
+                            class="el-icon-edit"
+                            circle>
                         </el-button>
                         <el-button
                             size="mini"
                             type="danger"
-                            @click="handleDelete(scope.$index, scope.row)">删除
+                            @click="handleDelete(scope.$index, scope.row)"
+                            class="el-icon-delete"
+                            circle>
                         </el-button>
                     </template>
                 </el-table-column>

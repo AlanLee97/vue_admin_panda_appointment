@@ -5,11 +5,11 @@
 
             <div class="al-box-shadow-radius al-p-20px al-m-bottom-20px ">
                 <el-radio-group v-model="type">
-                    <el-radio :label=-1>全部约拍</el-radio>
-                    <el-radio :label=0>普通拍照</el-radio>
-                    <el-radio :label=1>毕业照</el-radio>
-                    <el-radio :label=2>婚纱照</el-radio>
-                    <el-radio :label=3>电商模特</el-radio>
+                    <el-radio :label=0>全部约拍</el-radio>
+                    <el-radio :label=1>普通拍照</el-radio>
+                    <el-radio :label=2>毕业照</el-radio>
+                    <el-radio :label=3>婚纱照</el-radio>
+                    <el-radio :label=4>电商模特</el-radio>
                 </el-radio-group>
 
                 <span class="al-box-size-1px al-m-left-30px"></span>
@@ -19,7 +19,7 @@
                     class=""
                     type="primary"
                     size="mini"
-                    @click="">查询</el-button>
+                    @click="getAppointmentList()">查询</el-button>
 
             </div>
 
@@ -152,7 +152,7 @@
     export default {
         data(){
             return {
-                type: -1,
+                type: 0,
                 city: {},
                 offset: 0,
                 limit: 20,
@@ -271,9 +271,12 @@
 
             //获取约拍
             getAppointmentList:function () {
+
+                console.log(this.type);
+
                 request({
                     method:'get',
-                    url:'/appointment/get/all'
+                    url:'/appointment/get/type' + "?type=" + this.type
                 }).then(res => {
                     console.log(res);
                     const appointmentList = res.data.data;

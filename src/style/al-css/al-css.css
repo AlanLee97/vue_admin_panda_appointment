@@ -278,6 +278,13 @@
 .al-position-rela{
     position: relative;
 }
+
+/*相对位置*/
+.al-position-fixed{
+    position: fixed;
+}
+
+
 /*靠左*/
 .al-float-left{
     float: left;
@@ -287,6 +294,8 @@
 .al-float-right{
     float: right;
 }
+
+
 /*文字靠左*/
 .al-text-left{
     text-align: left;
@@ -665,6 +674,30 @@
     margin-left: 16px;
     margin-right: 16px;
 }
+
+
+/*底部距离*/
+.al-bottom-0px{
+    bottom: 0px;
+}
+
+.al-bottom-10px{
+    bottom: 10px;
+}
+
+.al-bottom-20px{
+    bottom: 20px;
+}
+
+.al-bottom-30px{
+    bottom: 30px;
+}
+
+.al-bottom-40px{
+    bottom: 40px;
+}
+
+
 
 /*================END 边距================*/
 

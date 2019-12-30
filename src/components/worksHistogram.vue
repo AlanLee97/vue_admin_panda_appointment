@@ -1,6 +1,6 @@
 <template>
     <div class="box">
-        <div id="appointmentHistogram" class="" style="width: 100%;height:600px;"></div>
+        <div id="worksHistogram" class="" style="width: 100%;height:600px;"></div>
     </div>
 </template>
 
@@ -17,7 +17,7 @@
 
     export default {
         mounted() {
-            this.myChart = echarts.init(document.getElementById('appointmentHistogram'), "light");
+            this.myChart = echarts.init(document.getElementById('worksHistogram'), "light");
             this.initData();
         },
         props: ['sevenDate', 'sevenDay'],
@@ -29,7 +29,7 @@
         methods: {
             initData(){
                 console.log(this.sevenDate);
-                const colors = ['#00b0ff', '#ff3519', '#00ffae'];
+                const colors = ['#00ffae'];
                 const option = {
                     color: colors,
                     title: {
@@ -40,7 +40,7 @@
                         trigger: 'axis'
                     },
                     legend: {
-                        data:['约拍']
+                        data:['作品']
                     },
                     toolbox: {
                         show: true,
@@ -77,7 +77,7 @@
                     ],
                     series: [
                         {
-                            name:'约拍',
+                            name:'作品',
                             type:'line',
                             data:this.sevenDate,
                             yAxisIndex: 0,

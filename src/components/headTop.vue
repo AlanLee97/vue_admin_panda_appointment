@@ -8,15 +8,14 @@
 		<el-dropdown @command="" menu-align='start'>
 			<img :src="userinfo.headPortraitImg" class="avator">
 			<el-dropdown-menu slot="dropdown">
-				<el-dropdown-item command="home">首页</el-dropdown-item>
-				<el-dropdown-item @click="signOut()">退出</el-dropdown-item>
+				<el-dropdown-item @click="goPage('/manage')">首页</el-dropdown-item>
+				<el-dropdown-item @click="goPage('/login')">退出</el-dropdown-item>
 			</el-dropdown-menu>
 		</el-dropdown>
     </div>
 </template>
 
 <script>
-	import {signout} from '@/api/getData'
 	import {baseImgPath} from '@/config/env'
 	import {mapActions, mapState} from 'vuex'
 
@@ -38,8 +37,9 @@
                 this.userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
                 console.log(this.userinfo);
             },
-            signOut:function () {
-                this.gotoPage('/login');
+
+            goPage:function (path) {
+                this.gotoPage(path);
             }
 		}
     }
