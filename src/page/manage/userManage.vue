@@ -24,7 +24,7 @@
             </div>
 
             <el-table
-                :data="tableData"
+                :data="allUser.list"
                 style="width: 100%"
                 class="al-box-shadow-radius al-p-20px"
             >
@@ -125,10 +125,12 @@
                 <el-pagination
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    :page-size="20"
+                    @prev-click="getAllUsers(allUser.prePage)"
+                    @next-click="getAllUsers(allUser.nextPage)"
+                    :current-page="allUser.pageNum"
+                    :page-size="10"
                     layout="total, prev, pager, next"
-                    :total="count">
+                    :total="allUser.total">
                 </el-pagination>
             </div>
             <el-dialog title="修改用户信息" :visible.sync="dialogFormVisible">
@@ -185,6 +187,7 @@
 <script>
     import headTop from '../../components/headTop'
     import {request} from "../../util/network/request";
+    import {USER_GET_ALL_COMMON} from "../../util/network/api/user/api-user";
 
     export default {
         data() {
@@ -199,11 +202,12 @@
                 selectTable: {},
                 dialogFormVisible: false,
 
+                allUser: {}
             }
         },
         created() {
 
-            this.getAllUsers();
+            this.getAllUsers(1);
         },
         components: {
             headTop,
@@ -269,8 +273,8 @@
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                this.currentPage = val;
-                this.offset = (val - 1) * this.limit;
+                // console.log(`当前第 ${val} 页`);
+                this.getAllUsers(val);
 
             },
             handleEdit(index, row) {
@@ -336,44 +340,15 @@
             },
 
             //获取所有用户
-            getAllUsers: function () {
-                console.log(this.role);
-
-                let data = {
-                    identity: this.role
-                };
-
+            getAllUsers(pageNum=1) {
+                // console.log(this.role);
 
                 request({
-                    method: 'post',
-                    url: '/user/get/all',
-                    headers: {
-                        "content-type": "application/x-www-form-urlencoded"
-                    },
-                    data: this.qsParam(data)
-
+                    url: USER_GET_ALL_COMMON + this.role + `?pageNum=${pageNum}&pageSize=10`,
                 }).then(res => {
-                    console.log(res);
-                    const userinfos = res.data.data;
-                    this.count = userinfos.length;
-
-                    this.tableData = [];
-                    userinfos.forEach(item => {
-                        const tableData = {};
-                        tableData.id = item.id;
-                        tableData.username = item.username;
-                        tableData.nickname = item.nickname;
-                        tableData.gender = item.gender;
-                        tableData.age = item.age;
-                        tableData.identity = item.identity;
-                        tableData.isAuthenticated = item.isAuthenticated;
-                        tableData.phone = item.phone;
-                        tableData.city = item.city;
-                        tableData.headPortraitImg = item.headPortraitImg;
-                        tableData.createTime = item.createTime;
-
-                        this.tableData.push(tableData);
-                    })
+                    // console.log(res);
+                    this.allUser = res.data.data;
+                    // console.log(this.allUser);
 
                 }).catch(err => {
                     console.log(err);

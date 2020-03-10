@@ -47,6 +47,9 @@
                 let startDate = dtime(date.getTime() - 86400000 * 6).format('YYYY-MM-DD');
                 let endDate = this.formatDate(date);
 
+                console.log(startDate);
+                console.log(endDate);
+
                 request({
                     method: 'get',
                     url: '/appointment/count/many' + "?startDate=" + startDate + "&endDate=" + endDate,

@@ -3,7 +3,7 @@
         <head-top></head-top>
         <div class="table_container">
             <el-table
-                :data="tableData"
+                :data="allWorks.list"
                 class="al-box-shadow-radius al-p-20px"
                 style="width: 100%">
                 <el-table-column type="expand" >
@@ -68,12 +68,14 @@
             </el-table>
             <div class="Pagination">
                 <el-pagination
-                  @size-change="handleSizeChange"
-                  @current-change="handleCurrentChange"
-                  :current-page="currentPage"
-                  :page-size="20"
-                  layout="total, prev, pager, next"
-                  :total="count">
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    @prev-click="getWorksList(allWorks.prePage)"
+                    @next-click="getWorksList(allWorks.nextPage)"
+                    :current-page="allWorks.pageNum"
+                    :page-size="10"
+                    layout="total, prev, pager, next"
+                    :total="allWorks.total">
                 </el-pagination>
             </div>
             <el-dialog title="作品列表" :visible.sync="dialogFormVisible">
@@ -105,6 +107,7 @@
 <script>
     import headTop from '../../components/headTop'
     import {request} from "../../util/network/request";
+    import {WORKS_GET_ALL_USER_PAGINATION} from "../../util/network/api/works/api-works";
 
     export default {
         data(){
@@ -113,7 +116,7 @@
                 offset: 0,
                 limit: 20,
                 count: 0,
-                tableData: [],
+                allWorks: {},
                 currentPage: 1,
                 selectTable: {},
                 dialogFormVisible: false,
@@ -125,7 +128,6 @@
         created(){
 
             this.getWorksList();
-            console.log(11111)
         },
     	components: {
     		headTop,
@@ -137,8 +139,7 @@
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                this.currentPage = val;
-                this.offset = (val - 1)*this.limit;
+                this.getWorksList(val);
 
             },
             handleEdit(index, row) {
@@ -188,29 +189,13 @@
 
 
             //获取作品信息
-            getWorksList:function () {
+            getWorksList(pageNum=1) {
                 request({
-                    method:'get',
-                    url:'/works/get/all-user'
+                    url: WORKS_GET_ALL_USER_PAGINATION + `?pageNum=${pageNum}&pageSize=10`
                 }).then(res => {
                     console.log(res);
-                    const worksList = res.data.data;
-                    this.count = worksList.length;
+                    this.allWorks = res.data.data;
 
-                    this.tableData = [];
-                    worksList.forEach(item => {
-                        const tableData = {};
-                        tableData.id = item.id;
-                        tableData.userId = item.tuser.id;
-                        tableData.datetime = item.datetime;
-                        tableData.images = item.images;
-                        tableData.introduction = item.introduction;
-                        tableData.tuser = item.tuser;
-
-                        this.tableData.push(tableData);
-                    });
-
-                    console.log(worksList);
                 }).catch(err => {
                     console.log(err);
 

@@ -23,7 +23,6 @@
 </template>
 
 <script>
-    import {login, getAdminInfo} from '@/api/getData'
     import {mapActions, mapState} from 'vuex'
     import {request} from '../util/network/request'
 

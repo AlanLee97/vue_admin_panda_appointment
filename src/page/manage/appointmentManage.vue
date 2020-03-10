@@ -26,7 +26,7 @@
 
 
             <el-table
-                :data="tableData"
+                :data="allAppointment.list"
                 class="al-box-shadow-radius al-p-20px"
                 style="width: 100%">
                 <el-table-column type="expand">
@@ -104,10 +104,12 @@
                 <el-pagination
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    :page-size="20"
+                    @prev-click="getAppointmentList(allAppointment.prePage)"
+                    @next-click="getAppointmentList(allAppointment.nextPage)"
+                    :current-page="allAppointment.pageNum"
+                    :page-size="10"
                     layout="total, prev, pager, next"
-                    :total="count">
+                    :total="allAppointment.total">
                 </el-pagination>
             </div>
             <el-dialog title="约拍列表" :visible.sync="dialogFormVisible">
@@ -154,6 +156,7 @@
 <script>
     import headTop from '../../components/headTop'
     import {request} from "../../util/network/request";
+    import {APPOINTMENT_GET_ALL, APPOINTMENT_GET_BY_TYPE} from "../../util/network/api/appointment/api-appointment";
 
     export default {
         data() {
@@ -163,8 +166,7 @@
                 offset: 0,
                 limit: 20,
                 count: 0,
-                tableData: [],
-                currentPage: 1,
+                allAppointment: {},
                 selectTable: {},
                 dialogFormVisible: false,
                 categoryOptions: [],
@@ -175,7 +177,6 @@
         created() {
 
             this.getAppointmentList();
-            console.log(11111)
         },
         components: {
             headTop,
@@ -186,9 +187,7 @@
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                this.currentPage = val;
-                this.offset = (val - 1) * this.limit;
-                this.getAppointmentList()
+                this.getAppointmentList(val);
             },
             handleEdit(index, row) {
                 this.selectTable = row;
@@ -280,34 +279,16 @@
 
 
             //获取约拍
-            getAppointmentList: function () {
+            getAppointmentList(pageNum=1) {
 
                 console.log(this.type);
 
                 request({
                     method: 'get',
-                    url: '/appointment/get/type' + "?type=" + this.type
+                    url: APPOINTMENT_GET_BY_TYPE + this.type + `?pageNum=${pageNum}&pageSize=10`
                 }).then(res => {
                     console.log(res);
-                    const appointmentList = res.data.data;
-                    this.count = appointmentList.length;
-
-                    this.tableData = [];
-                    appointmentList.forEach(item => {
-                        const tableData = {};
-                        tableData.id = item.id;
-                        tableData.userId = item.userId;
-                        tableData.aptTypeId = item.aptTypeId;
-                        tableData.title = item.title;
-                        tableData.ask = item.ask;
-                        tableData.address = item.address;
-                        // tableData.content = item.content;
-                        tableData.startDatetime = item.startDatetime;
-                        tableData.date = item.date;
-                        tableData.fee = item.fee;
-                        tableData.image = item.image;
-                        this.tableData.push(tableData);
-                    })
+                    this.allAppointment = res.data.data;
                 }).catch(err => {
                     console.log(err);
 

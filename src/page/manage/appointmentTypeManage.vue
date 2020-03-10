@@ -3,7 +3,7 @@
         <head-top></head-top>
         <div class="table_container">
             <el-table
-                :data="tableData"
+                :data="allAppointmentType.list"
                 class="al-box-shadow-radius al-p-20px"
                 style="width: 100%">
                 <el-table-column type="expand">
@@ -48,10 +48,12 @@
                 <el-pagination
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    :page-size="20"
+                    @prev-click="getAppointmentTypeList(allAppointmentType.prePage)"
+                    @next-click="getAppointmentTypeList(allAppointmentType.nextPage)"
+                    :current-page="allAppointmentType.pageNum"
+                    :page-size="10"
                     layout="total, prev, pager, next"
-                    :total="count">
+                    :total="allAppointmentType.total">
                 </el-pagination>
             </div>
             <el-dialog title="修改约拍类型" :visible.sync="dialogFormVisible">
@@ -77,6 +79,7 @@
 <script>
     import headTop from '../../components/headTop'
     import {request} from "../../util/network/request";
+    import {APPOINTMENT_TYPE_GET_ALL} from "../../util/network/api/appointment/api-appointment";
 
     export default {
         data() {
@@ -85,8 +88,7 @@
                 offset: 0,
                 limit: 20,
                 count: 0,
-                tableData: [],
-                currentPage: 1,
+                allAppointmentType: [],
                 selectTable: {},
                 dialogFormVisible: false,
                 categoryOptions: [],
@@ -95,9 +97,7 @@
             }
         },
         created() {
-
-            this.getAppointmentTypeList();
-            console.log(11111)
+            this.getAppointmentTypeList(1);
         },
         components: {
             headTop,
@@ -107,9 +107,7 @@
                 console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                this.currentPage = val;
-                this.offset = (val - 1) * this.limit;
-                this.getAppointmentTypeList()
+                this.getAppointmentTypeList(val);
             },
             handleEdit(index, row) {
                 this.selectTable = row;
@@ -197,25 +195,14 @@
 
 
             //获取约拍类型
-            getAppointmentTypeList: function () {
+            getAppointmentTypeList(pageNum=1) {
                 request({
-                    method: 'get',
-                    url: '/apt-type/get-all'
+                    url: APPOINTMENT_TYPE_GET_ALL + `?pageNum=${pageNum}&pageSize=10`
                 }).then(res => {
                     console.log(res);
-                    const appointmentList = res.data.data;
-                    this.count = appointmentList.length;
-
-                    this.tableData = [];
-                    appointmentList.forEach(item => {
-                        const tableData = {};
-                        tableData.id = item.id;
-                        tableData.type = item.type;
-
-                        this.tableData.push(tableData);
-                    })
+                    this.allAppointmentType = res.data.data;
                 }).catch(err => {
-                    console.log(err);
+                    console.log(err)
 
                 })
             },

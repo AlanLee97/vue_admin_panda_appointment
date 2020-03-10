@@ -18,7 +18,7 @@
         mounted(){
             this.myChart = echarts.init(document.getElementById('line1'), 'light');
             this.initData();
-            console.log(this.sevenDate);
+
 
         },
 

@@ -10,7 +10,7 @@
                 <el-col :span="20">
                     <el-row>
                         <el-col :span="12" class="al-p-10px" v-for="(item, index) in formData" :key="index">
-                            <div class="al-box-shadow-radius al-p-20px al-m-10px">
+                            <div class="al-box-shadow-radius al-p-20px al-m-10px" style="height: 360px">
                                 <!--                                <span class="demonstration">默认</span>-->
                                 <el-image :src="item.imgUrl" :preview-src-list="images"></el-image>
 
@@ -145,6 +145,7 @@
 
 
     import {request} from "../../util/network/request";
+    import {CAROUSEL_GET_ALL} from "../../util/network/api/carousel/api-carousel";
 
     export default {
         name: "carouselManage",
@@ -189,7 +190,7 @@
         methods: {
             getAllCarousel: function () {
                 request({
-                    url: '/carousel/get/all'
+                    url: CAROUSEL_GET_ALL
                 }).then(res => {
                     console.log(res);
                     res = res.data.data;
